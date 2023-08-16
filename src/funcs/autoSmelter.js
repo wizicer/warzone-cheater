@@ -41,23 +41,18 @@ export function autoUpdateSmelter(
       );
 
       //const sres = $(sbase.find(".ujsImgInner[id^='ujs_ResourceIcon']")[0]).css("background-image").slice(47, 53)
-      const samountText = $(
-        sbase
-          .find(
-            ".ujsGameObject[id^='ujs_ResourcesContainer'] .ujsTextInner[id^='ujs_Text']"
-          )
-          .slice(-1)
-      ).text();
+      const amounts = sbase
+        .find(
+          ".ujsGameObject[id^='ujs_ResourcesContainer'] .ujsTextInner[id^='ujs_Text']"
+        )
+        .map(function () {
+          return $(this).text();
+        })
+        .get()
+        .map((_) => _.split("/"))
+        .map((_) => ({ remain: getNumber(_[0]), per: getNumber(_[1]) }));
 
-      const samount = getNumber(samountText.split("/")[0]);
-      const peramount = getNumber(samountText.split("/")[1]);
-      if (samount == -1 || peramount == -1)
-        console.log(
-          sbase.find(
-            ".ujsGameObject[id^='ujs_ResourcesContainer'] .ujsTextInner[id^='ujs_Text']"
-          )
-        );
-      if (samount > peramount) {
+      if (amounts.every((_) => _.remain > _.per * 4)) {
         sbtn.click();
         assigned[j] = true;
         clicked = true;
