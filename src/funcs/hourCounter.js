@@ -1,5 +1,5 @@
 import { mdict } from "../data/mines";
-import { getSpeed, getTime, getResource, formatNum } from "./utils";
+import { getSpeed, getTime, getResource, formatNum, getTotal } from "./utils";
 
 export function updateHourCounterForArmyAndMoney() {
   const onehourarmy =
@@ -7,9 +7,16 @@ export function updateHourCounterForArmyAndMoney() {
   $("#ujs_ArmiesContainer_div").text(formatNum(onehourarmy) + "/h");
   const onedayarmy = onehourarmy * 24;
   $("#ujs_ArmiesContainer_div").attr("title", formatNum(onedayarmy) + "/d");
-  const onehourmoney =
-    getSpeed($("#ujs_MoneyLabel #ujs_MoneyLabel_tmp").text()) * 3600;
+  const onehourmoney = getMoneyPerSecond() * 3600;
   $("#ujs_MoneyContainer_div").text(formatNum(onehourmoney) + "/h");
+}
+
+export function getMoneyPerSecond() {
+  return getSpeed($("#ujs_MoneyLabel #ujs_MoneyLabel_tmp").text());
+}
+
+export function getTotalMoney() {
+  return getTotal($("#ujs_MoneyLabel #ujs_MoneyLabel_tmp").text());
 }
 
 export function updateMineStatus() {

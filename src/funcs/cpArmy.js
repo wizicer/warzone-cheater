@@ -1,4 +1,5 @@
 // update army
+import { getTotalMoney } from "./hourCounter";
 import { getNumber, formatNum } from "./utils";
 
 function getRawArmyByLevel(level, accelerate = 0) {
@@ -35,6 +36,11 @@ export function updateArmyCostPerf(modifiers) {
     .get()
     .map((_) => getNumber(_.replace("Upgrade\n￦", "")));
 
+  // upgrade buttons
+  const upgradeButtons = $(
+    ".ujsGameObject[id^='ujs_WziTabBodyArmyCampRow'] .ujsGameObject[id^='ujs_UpgradeBtnContainer'] a.ujsBtnInner[id^='ujs_UpgradeBtn']"
+  ).get();
+
   // army production
   const productions = $(
     ".ujsGameObject[id^='ujs_WziTabBodyArmyCampRow'] .ujsGameObject.ujsText[id^='ujs_ArmiesPerSecondLabel'] .ujsTextInner[id^='ujs_ArmiesPerSecondLabel']"
@@ -63,11 +69,21 @@ export function updateArmyCostPerf(modifiers) {
   );
   const mincpidx = cps.indexOf(Math.min(...cps));
   //console.log(mincpidx, Math.min(...cps),cps)
+
+  const moneyTotal = getTotalMoney();
+  const enableAutoUpgrade = true;
+  const moneyPercentAutoUpgrade = 0.5;
+
   for (let i = 0; i < labels.length; i++) {
     const cp = `Cost Perf.: ${formatNum(cps[i])}, Increase: ${formatNum(
       getArmyDiff(levels[i]) * 3600 * 24
     )}/d`;
     $(labels[i]).attr("title", cp);
     $(labels[i]).css("color", i == mincpidx ? "aliceblue" : "");
+    if (i == mincpidx && enableAutoUpgrade) {
+      if (moneyTotal * moneyPercentAutoUpgrade > upgradeCosts[i]) {
+        upgradeButtons[i].click();
+      }
+    }
   }
 }

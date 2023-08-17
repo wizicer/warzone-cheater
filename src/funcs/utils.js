@@ -32,6 +32,13 @@ export function getSpeed(text) {
   return getNumberByUnit(num, unit);
 }
 
+export function getTotal(text) {
+  const matches = /[￦₳]([\d\.]+)([KMB])/.exec(text);
+  const num = Number(matches[1]);
+  const unit = matches[2];
+  return getNumberByUnit(num, unit);
+}
+
 export function getResource(text) {
   const matches = /\/([\d\.]+)([KMB]*)/.exec(text);
   const num = Number(matches[1]);
