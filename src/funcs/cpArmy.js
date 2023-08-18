@@ -71,8 +71,9 @@ export function updateArmyCostPerf(modifiers) {
   //console.log(mincpidx, Math.min(...cps),cps)
 
   const moneyTotal = getTotalMoney();
-  const enableAutoUpgrade = true;
-  const moneyPercentAutoUpgrade = 0.5;
+  const aap = localStorage.getItem("army_auto_percent") ?? "0.5";
+  const moneyPercentAutoUpgrade = Number(aap);
+  const enableAutoUpgrade = !isNaN(moneyPercentAutoUpgrade);
 
   for (let i = 0; i < labels.length; i++) {
     const cp = `Cost Perf.: ${formatNum(cps[i])}, Increase: ${formatNum(
@@ -85,5 +86,23 @@ export function updateArmyCostPerf(modifiers) {
         upgradeButtons[i].click();
       }
     }
+  }
+}
+
+export function bindArmyTitle() {
+  const elem = $(
+    "#ujs_ArmyCampsBody .ujsInner.ujsTextInner[id^='ujs_Header']"
+  ).get(0);
+//   console.log("bind",elem)
+  if (!elem) return;
+  //   elem.attr("title", "");
+
+  if (!$._data(elem, "events")) {
+    $(elem).dblclick(function () {
+      const aap = localStorage.getItem("army_auto_percent") ?? "0.5";
+      const p = prompt(`Set the army auto purchase percent`, aap);
+      if (!p) return;
+      localStorage.setItem("army_auto_percent", p);
+    });
   }
 }

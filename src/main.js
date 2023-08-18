@@ -1,5 +1,5 @@
 import { autoUpdateSmelter } from "./funcs/autoSmelter";
-import { updateArmyCostPerf } from "./funcs/cpArmy";
+import { bindArmyTitle, updateArmyCostPerf } from "./funcs/cpArmy";
 import { updateMineCostPerf } from "./funcs/cpMine";
 import {
   updateHourCounterForArmyAndMoney,
@@ -77,6 +77,8 @@ $("a.btn[id^='ujs_UpgradeBtn']").on("click", function () {
 });
 
 setInterval(updateResourceLabel, 3000);
+
+setTimeout(bindArmyTitle, 7000);
 /*
 TODO:
 - x update info after click upgrade
