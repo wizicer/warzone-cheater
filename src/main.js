@@ -5,6 +5,7 @@ import {
   updateHourCounterForArmyAndMoney,
   updateMineStatus,
 } from "./funcs/hourCounter";
+import { updateResourceLabel } from "./funcs/tabResources";
 import { updateMineDetail, updateTerritoryDetail } from "./funcs/terDetail";
 import { getPercent } from "./funcs/utils";
 
@@ -67,14 +68,15 @@ setTimeout(updateModifiers, 7000);
 setInterval(updateMineDetail, 1000);
 setInterval(updateTerritoryDetail, 1000);
 
-setInterval(updateMineCostPerf, 10000);
-setInterval(() => updateArmyCostPerf(modifiers), 10000);
+setInterval(updateMineCostPerf, 3000);
+setInterval(() => updateArmyCostPerf(modifiers), 3000);
 $("a.btn[id^='ujs_UpgradeBtn']").on("click", function () {
   console.log("update after upgrade");
   updateMineCostPerf();
   updateArmyCostPerf(modifiers);
 });
 
+setInterval(updateResourceLabel, 3000);
 /*
 TODO:
 - x update info after click upgrade

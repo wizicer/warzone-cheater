@@ -1,5 +1,6 @@
 // update mine cost performance
 import { mdict, minedict } from "../data/mines";
+import { getEquippedArtifacts } from "./artifact";
 import { getNumber, formatNum } from "./utils";
 
 function getRawMineByLevel(level, accelerate = 0) {
@@ -114,6 +115,11 @@ export function updateMineCostPerf() {
   const wps = upgradeCosts.map((_, i) => upgradeCosts[i] / worths[i]);
   const maxwps = Math.max(...wps);
 
+  const artifacts = getEquippedArtifacts();
+  const spcolor = artifacts.some((_) => _ == "Mine Discount")
+    ? "aliceblue"
+    : "orangered";
+
   for (let i = 0; i < labels.length; i++) {
     //console.log(prods[i].type)
     //console.log(prods.map((j, p)=>({p,j})).map(_=>_.p))
@@ -130,7 +136,7 @@ export function updateMineCostPerf() {
     $(labels[i]).attr("title", cp);
     $(labels[i]).css(
       "color",
-      maxwps == wps[i] ? "teal" : mincp == cps[i] ? "aliceblue" : ""
+      maxwps == wps[i] ? "teal" : mincp == cps[i] ? spcolor : ""
     );
   }
 }
