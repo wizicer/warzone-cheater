@@ -98,4 +98,5 @@ export const mdict = {
   "FF00DB": "Platinum",
   "00F5FF": "Titanium",
   "FF8E00": "Thorium",
+  "8600FF": "Neodymium",
 };
