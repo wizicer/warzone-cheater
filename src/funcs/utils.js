@@ -64,8 +64,8 @@ export function getTime(text) {
     const s = Number(matches[1]);
     return s;
   } else {
-    const matches = /((\d+) minute[s]? )?(\d+) second[s]?/.exec(text);
-    const s = Number(matches[3]);
+    const matches = /((\d+) minute[s]?)? ?(?:(\d+) second[s]?)?/.exec(text);
+    const s = Number(matches[3] ?? 0);
     const m = Number(matches[2] ?? 0);
     return m * 60 + s;
   }
