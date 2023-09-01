@@ -10,7 +10,7 @@ import {
   bindResourceLabel,
   updateResourceLabel,
 } from "./funcs/tabResources";
-import { getTechs, refreshTechUIPrices } from "./funcs/tabTech";
+import { getTechs, refreshTechUIPrices, tryAutoUpgradeTech } from "./funcs/tabTech";
 import { updateMineDetail, updateTerritoryDetail } from "./funcs/terDetail";
 import { getPercent } from "./funcs/utils";
 
@@ -90,6 +90,7 @@ setInterval(autoSellResource, 10000);
 
 setTimeout(getTechs, 7000);
 setInterval(refreshTechUIPrices, 1000);
+setInterval(tryAutoUpgradeTech, 10000);
 
 /*
 TODO:

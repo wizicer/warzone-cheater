@@ -20,6 +20,7 @@ export function getTechs() {
       const border = getAssetName(borderRaw);
       // console.log("border", borderRaw, border);
       const researched = border == "Border-FFFF00";
+      const upgradable = border == "Border-FF0000";
       const techRaw = base
         .find(".ujsImgInner[id^='ujs_Icon']")
         .css("background-image");
@@ -37,12 +38,31 @@ export function getTechs() {
         })
         .get();
 
-      return { researched, tech, resources: ress, btn: this };
+      return { researched, upgradable, tech, resources: ress, btn: this };
     })
     .get()
     .filter((_) => _.tech);
-  console.log("techs", techs, JSON.stringify(techs));
+  // console.log("techs", techs);
   return techs;
+}
+
+export function tryAutoUpgradeTech() {
+  const techs = getTechs()
+    .filter((_) => _.tech == "CampingTent")
+    .filter((_) => _.upgradable);
+
+  for (let i = 0; i < techs.length; i++) {
+    const tech = techs[i];
+    upgradeTech(tech.btn);
+  }
+}
+
+function upgradeTech(techBtn) {
+  techBtn.click();
+  const base = $("#ujs_GenericContainer [id^='ujs_WziTabBodyTechDialog']");
+  const unlockBtn = base.find("a.ujsBtnInner[id^='ujs_PurchaseBtn']").get(0);
+  // const closeBtn=base.find("a.ujsBtnInner[id^='ujs_CloseBtn']")
+  unlockBtn.click();
 }
 
 export function refreshTechUIPrices() {
