@@ -5,7 +5,12 @@ import {
   updateHourCounterForArmyAndMoney,
   updateMineStatus,
 } from "./funcs/hourCounter";
-import { autoSellResource, bindResourceLabel, updateResourceLabel } from "./funcs/tabResources";
+import {
+  autoSellResource,
+  bindResourceLabel,
+  updateResourceLabel,
+} from "./funcs/tabResources";
+import { getTechs } from "./funcs/tabTech";
 import { updateMineDetail, updateTerritoryDetail } from "./funcs/terDetail";
 import { getPercent } from "./funcs/utils";
 
@@ -82,6 +87,8 @@ setTimeout(bindArmyTitle, 7000);
 setTimeout(bindResourceLabel, 7000);
 setInterval(bindResourceLabel, 100000);
 setInterval(autoSellResource, 10000);
+
+setTimeout(getTechs, 7000);
 
 /*
 TODO:
