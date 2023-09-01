@@ -1,10 +1,9 @@
 // update mine detail
+import { getGameName } from "../funcs/mainUi";
 import { levelData } from "../data/levels";
 import { minedict } from "../data/mines";
 
-const territories = levelData
-  .filter((_) => _.location)
-  .reduce((pv, cv) => ({ ...pv, [cv.location]: cv }), {});
+let territories = undefined;
 //console.log(levelData, territories)
 
 export function updateMineDetail() {
@@ -25,6 +24,17 @@ export function updateMineDetail() {
 
 // update territory detail
 export function updateTerritoryDetail() {
+  if (!territories) {
+    const gameName = getGameName();
+
+    if (gameName) {
+      territories = levelData
+        .filter((_) => _.location)
+        .filter((_) => _.levelName == gameName)
+        .reduce((pv, cv) => ({ ...pv, [cv.location]: cv }), {});
+    }
+  }
+
   const elem = $("#ujs_TopBar_2 #ujs_MainLabel_tmp");
   if (elem.get().length == 0) return;
   elem.attr("title", "");
