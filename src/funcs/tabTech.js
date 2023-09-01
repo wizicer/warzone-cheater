@@ -1,3 +1,6 @@
+import { getResourcePrices } from "./tabResources";
+import { formatNum, getNumber } from "./utils";
+
 const reImg = /https:\/\/warzonecdn\.com\/ujs\/Resources\/(.*?)\.png/g;
 
 function getAssetName(text) {
@@ -40,4 +43,45 @@ export function getTechs() {
     .filter((_) => _.tech);
   console.log("techs", techs, JSON.stringify(techs));
   return techs;
+}
+
+export function refreshTechUIPrices() {
+  const base = $("#ujs_GenericContainer [id^='ujs_WziTabBodyTechDialog']");
+  if (base.css("z-index") == "1000") return;
+
+  const resources = base
+    .find("[id^='ujs_CostContainer'] [id^='ujs_horz']")
+    .map(function () {
+      const labels = $(this).find(".ujsTextInner[id^='ujs_Text']");
+      const numberLabel = $(labels.get(0));
+      const typeLabel = $(labels.get(1));
+      // console.log(labels, numberLabel, typeLabel);
+      const type = typeLabel.text();
+      const r = numberLabel.text();
+      const nums = r.split("/");
+      const total = getNumber(nums[0]);
+      const required = getNumber(nums[1]);
+      return {
+        numberLabel,
+        typeLabel,
+        type,
+        total,
+        required,
+      };
+    })
+    .get();
+  if (resources.length == 0) return;
+  // console.log(resources);
+  const rprices = getResourcePrices();
+  const dprices = rprices.reduce(
+    (pv, cv) => ({ ...pv, [cv.type]: cv.price }),
+    {}
+  );
+  for (let i = 0; i < resources.length; i++) {
+    const r = resources[i];
+    r.typeLabel.css("width", "269px");
+    const cost = r.required * (dprices[r.type] ?? 0);
+    r.typeLabel.text(r.type + " " + formatNum(cost));
+  }
+  base.css("z-index", "1000");
 }
