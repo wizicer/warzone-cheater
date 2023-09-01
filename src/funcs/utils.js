@@ -47,6 +47,7 @@ export function getResource(text) {
 }
 
 export function getNumber(text) {
+  if (text === undefined || text == "") return -1;
   try {
     const matches = /([\d\.]+)([KMB]*)/.exec(text);
     const num = Number(matches[1]);
