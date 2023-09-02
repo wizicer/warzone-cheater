@@ -47,8 +47,9 @@ export function getTechs() {
 }
 
 export function tryAutoUpgradeTech() {
+  const allowedTechs = ["CampingTent", "MineTruck"];
   const techs = getTechs()
-    .filter((_) => _.tech == "CampingTent")
+    .filter((_) => allowedTechs.some((t) => t == _.tech))
     .filter((_) => _.upgradable);
 
   for (let i = 0; i < techs.length; i++) {
