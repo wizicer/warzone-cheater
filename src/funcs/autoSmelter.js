@@ -29,35 +29,72 @@ export function autoUpdateSmelter(
     const selectBtns = $(
       "#ujs_GenericContainer .ujsGameObject.ujsBtn.ujsImg>.btn.ujsInner.ujsBtnInner[id^=ujs_SelectBtn]"
     ).slice(0, -1); //except last deactivate button
+    const recipes = selectBtns
+      .map(function () {
+        const sbase = $(this).parent().parent().parent();
+
+        const time = getTime(
+          sbase.find(".ujsTextInner[id^='ujs_DurationLabel']").text()
+        );
+
+        //const sres = $(sbase.find(".ujsImgInner[id^='ujs_ResourceIcon']")[0]).css("background-image").slice(47, 53)
+        const resources = sbase
+          .find(
+            ".ujsGameObject[id^='ujs_ResourcesContainer'] .ujsTextInner[id^='ujs_Text']"
+          )
+          .map(function () {
+            return $(this).text();
+          })
+          .get()
+          .map((_) => _.split("/"))
+          .map((_) => ({ remain: getNumber(_[0]), per: getNumber(_[1]) }));
+        const output = sbase
+          .find(
+            ".ujsGameObject[id^='ujs_MakingContainer'] .ujsTextInner[id^='ujs_Text']"
+          )
+          .text()
+          .split("(")[0]
+          .trim();
+        return {
+          btn: this,
+          time,
+          resources,
+          output,
+        };
+      })
+      .get();
+
+    const tops = ["Silicon Bar"];
+    const bottoms = ["Silver Bar"];
+    // console.log("before", JSON.stringify(recipes.map((_) => _.output)));
+    recipes.reverse();
+    for (let j = 0; j < tops.length; j++) {
+      const e = tops[j];
+      const idx = recipes.findIndex((_) => _.output == e);
+      const sp = recipes[idx];
+      recipes.splice(idx, 1);
+      recipes.splice(0, 0, sp);
+    }
+    for (let j = 0; j < bottoms.length; j++) {
+      const e = bottoms[j];
+      const idx = recipes.findIndex((_) => _.output == e);
+      const sp = recipes[idx];
+      recipes.splice(idx, 1);
+      recipes.push(sp);
+    }
+    // console.log("after", JSON.stringify(recipes.map((_) => _.output)));
 
     let clicked = false;
-    for (var j = selectBtns.length - 1; j >= 0; j--) {
+    for (var j = 0; j < recipes.length; j++) {
+      const rec = recipes[j];
       if (assigned[j]) continue;
-      const sbtn = selectBtns[j];
-      const sbase = $(sbtn).parent().parent().parent();
 
-      const time = getTime(
-        sbase.find(".ujsTextInner[id^='ujs_DurationLabel']").text()
-      );
-
-      //const sres = $(sbase.find(".ujsImgInner[id^='ujs_ResourceIcon']")[0]).css("background-image").slice(47, 53)
-      const amounts = sbase
-        .find(
-          ".ujsGameObject[id^='ujs_ResourcesContainer'] .ujsTextInner[id^='ujs_Text']"
-        )
-        .map(function () {
-          return $(this).text();
-        })
-        .get()
-        .map((_) => _.split("/"))
-        .map((_) => ({ remain: getNumber(_[0]), per: getNumber(_[1]) }));
-
-      if (amounts.every((_) => _.remain > _.per * 4)) {
-        sbtn.click();
+      if (rec.resources.every((_) => _.remain > _.per * 4)) {
+        rec.btn.click();
         assigned[j] = true;
         clicked = true;
         smeltersExpiry[i] =
-          Date.now() + Math.max(minDuration, (time + 10) * 1000);
+          Date.now() + Math.max(minDuration, (rec.time + 10) * 1000);
         break;
       }
     }
