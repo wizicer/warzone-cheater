@@ -13,7 +13,7 @@ export function autoUpdateSmelter(
   const changeBtns = $(
     "#ujs_SmeltersBacking .btn.ujsInner.ujsBtnInner[id^=ujs_SwitchRecipeBtn]"
   );
-  const assigned = {};
+  // const assigned = {};
 
   for (var i = 0; i < changeBtns.length; i++) {
     const cbtn = changeBtns[i];
@@ -87,14 +87,14 @@ export function autoUpdateSmelter(
     let clicked = false;
     for (var j = 0; j < recipes.length; j++) {
       const rec = recipes[j];
-      if (assigned[j]) continue;
+      // if (assigned[j]) continue;
 
       if (rec.resources.every((_) => _.remain > _.per * 4)) {
         rec.btn.click();
-        assigned[j] = true;
+        // assigned[j] = true;
         clicked = true;
         smeltersExpiry[i] =
-          Date.now() + Math.max(minDuration, (rec.time + 10) * 1000);
+          Date.now() + Math.max(minDuration, 4 * (rec.time + 10) * 1000);
         break;
       }
     }
