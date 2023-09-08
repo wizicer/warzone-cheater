@@ -65,12 +65,14 @@ export function autoUpdateSmelter(
       .get();
 
     const tops = ["Silicon Bar"];
-    const bottoms = ["Silver Bar"];
+    // const bottoms = ["Silver Bar"];
+    const bottoms = [];
     // console.log("before", JSON.stringify(recipes.map((_) => _.output)));
     recipes.reverse();
     for (let j = 0; j < tops.length; j++) {
       const e = tops[j];
       const idx = recipes.findIndex((_) => _.output == e);
+      if (idx == -1) continue;
       const sp = recipes[idx];
       recipes.splice(idx, 1);
       recipes.splice(0, 0, sp);
@@ -78,6 +80,7 @@ export function autoUpdateSmelter(
     for (let j = 0; j < bottoms.length; j++) {
       const e = bottoms[j];
       const idx = recipes.findIndex((_) => _.output == e);
+      if (idx == -1) continue;
       const sp = recipes[idx];
       recipes.splice(idx, 1);
       recipes.push(sp);
