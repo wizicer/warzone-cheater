@@ -1,4 +1,5 @@
 export function formatNum(num) {
+  if (num == Infinity) return "Infinity";
   if (!num) return "NaN";
   let displaynum = num;
   let pos = 0;
@@ -65,10 +66,13 @@ export function getTime(text) {
     const s = Number(matches[1]);
     return s;
   } else {
-    const matches = /((\d+) minute[s]?)? ?(?:(\d+) second[s]?)?/.exec(text);
+    const matches = /(?:(\d+) hour[s]?)? ?(?:(\d+) minute[s]?)? ?(?:(\d+) second[s]?)?/.exec(
+      text
+    );
     const s = Number(matches[3] ?? 0);
     const m = Number(matches[2] ?? 0);
-    return m * 60 + s;
+    const h = Number(matches[1] ?? 0);
+    return h * 3600 + m * 60 + s;
   }
 }
 
