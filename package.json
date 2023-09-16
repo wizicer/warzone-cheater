@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "serve": "vite",
+    "serve": "node server.js",
+    "serve:vite": "vite build --watch",
     "build": "vite build",
     "preview": "vite preview"
   },
