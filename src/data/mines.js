@@ -105,4 +105,5 @@ export const mdict = {
   "734400": "Lanthanum",
   "FF6260": "Terbium",
   "FFCD6D": "Erbium",
+  "059896": "Yttrium",
 };
