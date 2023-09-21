@@ -47,7 +47,22 @@ export function getTechs() {
 }
 
 export function tryAutoUpgradeTech() {
-  const allowedTechs = ["CampingTent", "MineTruck"];
+  const allowedTechs = [
+    "CampingTent", // Army Camp Increase
+    "MineTruck", // Mine Increase
+    "DropWeapon", // Draft Army
+    "MoneyStack", // Money Increase
+    "PulleyHook", // Smelting/Crafting
+    "Crafting", // Smelting/Crafting
+    "ClaymoreExplosive", // Smelting/Crafting
+    "Profit", // Smelting/Crafting
+    "Doubled", // Smelting/Crafting
+    "Campfire", // Army Camp Cost Down
+    "Banknote", // Mine Camp Cost Down
+    "Minerals", // Ores Price Increase
+    "GemPendant", // Alloy Price Increase
+    "Cash", // Item Price Increase
+  ];
   const techs = getTechs()
     .filter((_) => allowedTechs.some((t) => t == _.tech))
     .filter((_) => _.upgradable);
