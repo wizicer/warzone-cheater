@@ -1,5 +1,5 @@
 export function updateRecipeLabel() {
-  const rows = $("#ujs_WziRecipeStatsDialog #ujs_Table [id^='ujs_Row']").get();
+  const rows = $("[id^='ujs_WziRecipeStatsDialog'] [id^='ujs_Table'] [id^='ujs_Row']").get();
   if (rows.length == 0) return;
   const labels = rows.map((_) =>
     $(_).find(".ujsText:first .ujsTextInner").get(0)
@@ -25,7 +25,7 @@ export function updateRecipeLabel() {
 }
 
 export function bindRecipeLabel() {
-  const rows = $("#ujs_WziRecipeStatsDialog #ujs_Table [id^='ujs_Row']").get();
+  const rows = $("[id^='ujs_WziRecipeStatsDialog'] [id^='ujs_Table'] [id^='ujs_Row']").get();
   if (rows.length == 0) return;
   const labels = rows.map((_) =>
     $(_).find(".ujsText:first .ujsTextInner").get(0)
