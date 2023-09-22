@@ -5,6 +5,7 @@ import {
   updateHourCounterForArmyAndMoney,
   updateMineStatus,
 } from "./funcs/hourCounter";
+import { bindRecipeLabel, updateRecipeLabel } from "./funcs/popRecipeStats";
 import {
   autoSellResource,
   bindResourceLabel,
@@ -91,6 +92,9 @@ setInterval(autoSellResource, 10000);
 setTimeout(getTechs, 7000);
 setInterval(refreshTechUIPrices, 1000);
 setInterval(tryAutoUpgradeTech, 10000);
+
+setInterval(bindRecipeLabel, 5000);
+setInterval(updateRecipeLabel, 5000);
 
 /*
 TODO:

@@ -64,9 +64,11 @@ export function autoUpdateSmelter(
       })
       .get();
 
-    const tops = ["Silicon Bar"];
-    // const bottoms = ["Silver Bar"];
-    const bottoms = [];
+    let { bottoms, tops } = JSON.parse(
+      localStorage.getItem("warzone_smelter_pin") ?? "{}"
+    );
+    bottoms = bottoms ?? [];
+    tops = tops ?? [];
     // console.log("before", JSON.stringify(recipes.map((_) => _.output)));
     recipes.reverse();
     for (let j = 0; j < tops.length; j++) {
