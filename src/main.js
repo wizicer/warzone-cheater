@@ -27,7 +27,7 @@ setInterval(function () {
 
 // auto smelters
 const smelters = {};
-setInterval(() => autoUpdateSmelter(smelters), 10000);
+setInterval(() => autoUpdateSmelter(smelters), 5000);
 
 // avoid idle counter
 setInterval(function () {
