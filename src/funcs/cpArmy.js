@@ -1,5 +1,6 @@
 // update army
 import { getTotalMoney } from "./hourCounter";
+import { getGameName } from "./mainUi";
 import { getNumber, formatNum } from "./utils";
 
 function getRawArmyByLevel(level, accelerate = 0) {
@@ -72,6 +73,8 @@ export function updateArmyCostPerf(modifiers) {
 
   const moneyTotal = getTotalMoney();
   const aap = localStorage.getItem("army_auto_percent") ?? "0.5";
+  const gameName = getGameName();
+  if (gameName == "Battle") aap = "0.9";
   const moneyPercentAutoUpgrade = Number(aap);
   const enableAutoUpgrade = !isNaN(moneyPercentAutoUpgrade);
 
@@ -93,7 +96,7 @@ export function bindArmyTitle() {
   const elem = $(
     "#ujs_ArmyCampsBody .ujsInner.ujsTextInner[id^='ujs_Header']"
   ).get(0);
-//   console.log("bind",elem)
+  //   console.log("bind",elem)
   if (!elem) return;
   //   elem.attr("title", "");
 
