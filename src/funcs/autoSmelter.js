@@ -118,8 +118,8 @@ function pickRecipe(smeltersExpiry /* : { [idx: number]: number } */, i) {
 }
 
 function isResourceGoodToStartSmelt({ remain, per }) {
-  if (per < 1000) return remain > per * 4;
-  if (per < 2000) return remain > per * 3;
-  if (per < 4000) return remain > per * 2;
+  if (per < 4000) return remain > per * 4;
+  if (per < 7000) return remain > per * 3;
+  if (per < 10000) return remain > per * 2;
   return remain > per;
 }
