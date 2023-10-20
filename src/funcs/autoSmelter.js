@@ -5,6 +5,8 @@ const minDuration = 300000; // 5min
 export function autoUpdateSmelter(
   smeltersExpiry /* : { [idx: number]: number } */
 ) {
+  if (!isAutoSmelterOn()) return;
+
   const progTexts = $(
     "#ujs_SmeltersBacking .ujsTextInner[id^=ujs_ProgressLabel]"
   ).map(function () {
@@ -122,4 +124,37 @@ function isResourceGoodToStartSmelt({ remain, per }) {
   if (per < 7000) return remain > per * 3;
   if (per < 10000) return remain > per * 2;
   return remain > per;
+}
+
+let turnOnAutoSmelterTimeout;
+
+export function initAutoSmelterSwitch() {
+  $("#ujs_GameNameLabel")
+    .after(`<div class="ujsGameObject ujsText" id="ujs_AutoSmelter"
+   style="left: 139px; bottom: 2px; transform-origin: 25px -13px;">
+   <div class="ujsInner ujsTextInner" id="ujs_AutoSmelter_tmp"
+   style="width: 90px; height: 26px; color: rgb(186, 186, 187); text-align: left; justify-content: flex-start; align-items: center; font-size: 9px; line-height: 19.1187px; white-space: pre-wrap; padding: 0px; overflow: visible;"
+   >Auto Smelter On</div>
+   </div>`);
+  $("#ujs_AutoSmelter .ujsTextInner").click(function () {
+    const text = $("#ujs_AutoSmelter .ujsTextInner").text();
+    if (text == "Auto Smelter On") {
+      $("#ujs_AutoSmelter .ujsTextInner").text("Auto Smelter Off");
+      turnOnAutoSmelterTimeout = setTimeout(() => {
+        $("#ujs_AutoSmelter .ujsTextInner").text("Auto Smelter On");
+      }, 300000);
+    } else {
+      if (turnOnAutoSmelterTimeout) clearTimeout(turnOnAutoSmelterTimeout);
+      $("#ujs_AutoSmelter .ujsTextInner").text("Auto Smelter On");
+    }
+  });
+}
+
+export function isAutoSmelterOn() {
+  const text = $("#ujs_AutoSmelter .ujsTextInner").text();
+  if (text == "Auto Smelter On") {
+    return true;
+  }
+
+  return false;
 }

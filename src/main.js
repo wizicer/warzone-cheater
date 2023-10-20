@@ -1,4 +1,4 @@
-import { autoUpdateSmelter } from "./funcs/autoSmelter";
+import { autoUpdateSmelter, initAutoSmelterSwitch } from "./funcs/autoSmelter";
 import { bindArmyTitle, updateArmyCostPerf } from "./funcs/cpArmy";
 import { updateMineCostPerf } from "./funcs/cpMine";
 import {
@@ -95,6 +95,8 @@ setInterval(tryAutoUpgradeTech, 10000);
 
 setInterval(bindRecipeLabel, 5000);
 setInterval(updateRecipeLabel, 5000);
+
+setTimeout(initAutoSmelterSwitch, 13000);
 
 /*
 TODO:
