@@ -1,3 +1,4 @@
+import { initQuickArtifactButton } from "./funcs/artifact";
 import { autoUpdateSmelter, initAutoSmelterSwitch } from "./funcs/autoSmelter";
 import { bindArmyTitle, updateArmyCostPerf } from "./funcs/cpArmy";
 import { updateMineCostPerf } from "./funcs/cpMine";
@@ -11,7 +12,11 @@ import {
   bindResourceLabel,
   updateResourceLabel,
 } from "./funcs/tabResources";
-import { getTechs, refreshTechUIPrices, tryAutoUpgradeTech } from "./funcs/tabTech";
+import {
+  getTechs,
+  refreshTechUIPrices,
+  tryAutoUpgradeTech,
+} from "./funcs/tabTech";
 import { updateMineDetail, updateTerritoryDetail } from "./funcs/terDetail";
 import { getPercent } from "./funcs/utils";
 
@@ -97,6 +102,7 @@ setInterval(bindRecipeLabel, 5000);
 setInterval(updateRecipeLabel, 5000);
 
 setTimeout(initAutoSmelterSwitch, 13000);
+setTimeout(initQuickArtifactButton, 14000);
 
 /*
 TODO:
