@@ -47,6 +47,8 @@ export function getTechs() {
 }
 
 export function tryAutoUpgradeTech() {
+  if (!isAutoTechOn()) return;
+
   const allowedTechs = [
     "CampingTent", // Army Camp Increase
     "MineTruck", // Mine Increase
@@ -120,4 +122,13 @@ export function refreshTechUIPrices() {
     r.typeLabel.text(r.type + " " + formatNum(cost));
   }
   base.css("z-index", "1000");
+}
+
+export function isAutoTechOn() {
+  const text = $("#ujs_AutoTech .ujsTextInner").text();
+  if (text == "Auto Tech On") {
+    return true;
+  }
+
+  return false;
 }
