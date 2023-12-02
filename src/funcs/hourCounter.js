@@ -42,7 +42,9 @@ export function updateMineStatus() {
     "title",
     mtitle
   );
+}
 
+export function updateRecipeCalculation() {
   // smelter recipe
   $("[id^='ujs_RecipesContainer'] .ujsTextInner[id^='ujs_DurationLabel']").each(
     function () {
