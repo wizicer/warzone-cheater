@@ -3,9 +3,6 @@ import { getGameName } from "../funcs/mainUi";
 import { levelData } from "../data/levels";
 import { minedict } from "../data/mines";
 
-let territories = undefined;
-//console.log(levelData, territories)
-
 export function updateMineDetail() {
   const elem = $(
     "#ujs_InspectBody #ujs_AssetsContainer .ujsGameObject[id^=ujs_AssetRow] .ujsTextInner[id^=ujs_Text]"
@@ -24,17 +21,6 @@ export function updateMineDetail() {
 
 // update territory detail
 export function updateTerritoryDetail() {
-  if (!territories) {
-    const gameName = getGameName();
-
-    if (gameName) {
-      territories = levelData
-        .filter((_) => _.location)
-        .filter((_) => _.levelName == gameName)
-        .reduce((pv, cv) => ({ ...pv, [cv.location]: cv }), {});
-    }
-  }
-
   const elem = $("#ujs_TopBar_2 #ujs_MainLabel_tmp");
   if (elem.get().length == 0) return;
   elem.attr("title", "");
@@ -51,7 +37,7 @@ export function updateTerritoryDetail() {
   }
 
   const text = elem.text();
-  const ter = territories[text];
+  const ter = getTerritoryInfo(text);
   //console.log(text, ter, territories)
   const hter = ter ? `${ter.type} [${ter.name}]: ${ter.details}` : "";
 
@@ -72,4 +58,23 @@ export function updateTerritoryDetail() {
   foggedElem.parent().css("width", "380px");
   foggedElem.text(content);
   foggedElem.attr("title", content);
+}
+
+let territories = undefined;
+//console.log(levelData, territories)
+
+export function getTerritoryInfo(name) {
+  if (!territories) {
+    const gameName = getGameName();
+
+    if (gameName) {
+      territories = levelData
+        .filter((_) => _.location)
+        .filter((_) => _.levelName == gameName)
+        .reduce((pv, cv) => ({ ...pv, [cv.location]: cv }), {});
+    }
+  }
+
+  const ter = territories[name];
+  return ter;
 }

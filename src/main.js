@@ -19,6 +19,7 @@ import {
 } from "./funcs/tabTech";
 import { updateMineDetail, updateTerritoryDetail } from "./funcs/terDetail";
 import { getPercent } from "./funcs/utils";
+import { clickCanvas, updateCanvasTooltip } from "./funcs/canvas";
 
 // remove ads
 $("#WaitDialogJSMainDiv").next().remove();
@@ -35,18 +36,7 @@ const smelters = {};
 setInterval(() => autoUpdateSmelter(smelters), 5000);
 
 // avoid idle counter
-setInterval(function () {
-  const elems = $("#Reserve").get();
-  if (elems.length == 0) {
-    console.warn("failed to find reserve canvas for idle counter avoider.");
-    return;
-  }
-  elems[0].click();
-
-  $("#ujs_LiveWorldRoot canvas").each(function () {
-    this.click();
-  });
-}, 100000);
+setInterval(clickCanvas, 100000);
 
 // update modifiers
 const modifiers = {};
@@ -102,6 +92,8 @@ setInterval(bindRecipeLabel, 5000);
 setInterval(updateRecipeLabel, 5000);
 
 setTimeout(initTitleQuickAction, 13000);
+
+setInterval(updateCanvasTooltip, 500);
 
 /*
 TODO:
