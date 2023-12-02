@@ -25,5 +25,5 @@ export function updateCanvasTooltip() {
   const info = getTerritoryInfo("Territory: " + name);
   if (!info) return;
 
-  elem.text(`>${text}\n${info.details}`);
+  elem.text(`>${text}\n${info.type} [${info.name}]: ${info.details}`);
 }
