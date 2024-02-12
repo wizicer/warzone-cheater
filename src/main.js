@@ -1,5 +1,5 @@
 import { initTitleQuickAction } from "./funcs/mainUi";
-import { autoUpdateSmelter } from "./funcs/autoSmelter";
+import { autoUpdateSmelter, bindSmelterTitle } from "./funcs/autoSmelter";
 import { bindArmyTitle, updateArmyCostPerf } from "./funcs/cpArmy";
 import { updateMineCostPerf } from "./funcs/cpMine";
 import {
@@ -34,6 +34,7 @@ setInterval(function () {
 // auto smelters
 const smelters = {};
 setInterval(() => autoUpdateSmelter(smelters), 5000);
+setInterval(bindSmelterTitle, 5000);
 
 // avoid idle counter
 setInterval(clickCanvas, 100000);

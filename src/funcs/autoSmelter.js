@@ -1,6 +1,7 @@
 import { getNumber, getTime } from "./utils";
 
 const minDuration = 300000; // 5min
+export const SmelterFixNumberKey = "smelter_fix_number";
 
 export function autoUpdateSmelter(
   smeltersExpiry /* : { [idx: number]: number } */
@@ -17,7 +18,9 @@ export function autoUpdateSmelter(
   );
   // const assigned = {};
 
-  for (var i = 0; i < changeBtns.length; i++) {
+  const sfn = localStorage.getItem(SmelterFixNumberKey) ?? "0";
+
+  for (var i = sfn; i < changeBtns.length; i++) {
     const cbtn = changeBtns[i];
     const text = progTexts[i];
     if (!smeltersExpiry[i]) smeltersExpiry[i] = Date.now() + minDuration;
@@ -133,4 +136,23 @@ export function isAutoSmelterOn() {
   }
 
   return false;
+}
+
+export function bindSmelterTitle() {
+  const elem = $(
+    "#ujs_SmeltersAndCraftersBody .ujsInner.ujsTextInner[id^='ujs_Header']"
+  ).get(0);
+  if (!elem) return;
+  const total = $(
+    "#ujs_SmeltersBacking .btn.ujsInner.ujsBtnInner[id^=ujs_SwitchRecipeBtn]"
+  ).length;
+
+  if (!$._data(elem, "events")) {
+    $(elem).dblclick(function () {
+      const aap = localStorage.getItem(SmelterFixNumberKey) ?? "0";
+      const p = prompt(`Set the smelter fix number. [total is ${total}]`, aap);
+      if (!p) return;
+      localStorage.setItem(SmelterFixNumberKey, p);
+    });
+  }
 }
